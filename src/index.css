@@ -53,3 +53,15 @@
     border: 1px solid rgba(124, 124, 124, 0.26);
     cursor: pointer;
 }
+
+.filter-btn {
+    border: 0px;
+    background-color: rgb(167, 230, 167);
+    padding: 10px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.filter-btn:hover {
+    cursor: pointer;
+}
