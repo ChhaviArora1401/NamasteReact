@@ -52,4 +52,17 @@ import {Component} from "path";
 # React Hooks
 (Normal JS utility functions)
 - useState() - Superpowerful State Variables in React
-- useEffect()
+    - whenever state variable update, react triggers a reconciliation cycle(re-renders the component)
+
+- useEffect() - 
+    - if no dependancy array => useEffect is called on every render
+    - if dependency array is empty = [] => useEffect is called on initial render(just once)
+    - if dependecy array is [state] => called everytime 'state' is updated
+
+
+# 2 types Routing in web apps
+- Client Side Routing
+- Server Side Routing
+
+
+# Dynamic Routing

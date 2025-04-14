@@ -1,10 +1,10 @@
 import ResCard from "./ResCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 
 const Body = () => { 
   // Local State Variable - Super powerful variable
-  // const [newResList, setNewResList] =  useState(resList);
   const [newResList, setNewResList] =  useState([]);
   const [filterResList, setFilterResList] =  useState([]);
   const [searchText, setSearchText] = useState("");
@@ -48,7 +48,7 @@ const Body = () => {
         </div>
       <div className="res-container">
        {filterResList?.map((r) => {
-          return <ResCard resData={r} key={r.info.id} />
+          return  <Link to={"/restaurants/" + r.info.id} key={r.info.id}><ResCard resData={r} /></Link>
         })}
       </div>
     </div>
