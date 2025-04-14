@@ -1,34 +1,53 @@
 import ResCard from "./ResCard";
-import resList from "../utils/mockData";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Shimmer from "./Shimmer";
 
-// not using keys (not acceptable) <<<< index as key <<<<<<<< unique id (best practice)
 const Body = () => { 
   // Local State Variable - Super powerful variable
-  const [newResList, setNewResList] =  useState(resList);
+  // const [newResList, setNewResList] =  useState(resList);
+  const [newResList, setNewResList] =  useState([]);
+  const [filterResList, setFilterResList] =  useState([]);
+  const [searchText, setSearchText] = useState("");
 
-  // another way of declaring state
-  // const arr = useState(resList);
-  // const newResList = arr[0];
-  // const setNewResList = arr[1];
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  // Normal JS Variable
-  let newResList1 = [];
+  const fetchData = async () => {
+    const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.7040592&lng=77.10249019999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+    const json = await data.json();
+    
+    // Optional chaining
+    setNewResList(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    setFilterResList(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+  }
 
-  return (
+  // Conditional Rendering
+  return newResList?.length === 0 ? ( <Shimmer /> ) : (
     <div className="body">
         <div className="filter">
+          <div className="search"> 
+            <input type="text" className="searchbox" value={searchText} 
+            onChange={(e) => {
+              setSearchText(e.target.value);
+            }} />
+            <button onClick={() => {
+              // FIlter the res cards and update Ui
+              //search text
+              console.log(searchText);
+              const filteredRes = newResList.filter((res) => 
+                {return res.info.name.toLowerCase().includes(searchText)}
+              );
+              setFilterResList(filteredRes);
+            }}>Search</button>
+          </div>
             <button className="filter-btn" onClick={() => {
-              // filter logic
-              const filtered = newResList.filter((res) => res.info.rating.value > 4.0);
-              setNewResList(filtered);
-              console.log(filtered);
+              const filtered = newResList.filter((res) => res.info.avgRating > 4.5);
+              setFilterResList(filtered);
             }}>Top Rated Restaurants</button>
         </div>
-      <div className="search">Search</div>
       <div className="res-container">
-       {/* <ResCard resData={resObj[0]} /> */}
-       {newResList.map((r) => {
+       {filterResList?.map((r) => {
           return <ResCard resData={r} key={r.info.id} />
         })}
       </div>
