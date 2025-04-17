@@ -66,3 +66,21 @@ import {Component} from "path";
 
 
 # Dynamic Routing
+
+
+# Class Component LifeCycle
+/* what happens:
+ - Parent Constructor
+   - Parent Render
+
+   - Durga Child Constructor
+   - Durga Child Render
+
+   - Sonu Child Constructor
+   - Sonu Child Render
+
+<DOM UPDATED - IN SINGLE BATCH> 
+   - Durga Child Component Did Mount
+   - Sonu Child Component Did Mount
+
+- Parent Component Did Mount */
