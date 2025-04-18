@@ -2,6 +2,7 @@ import ResCard from "./ResCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import useOnlineStaus from "../utils/useOnlineStatus";
 
 const Body = () => { 
   // Local State Variable - Super powerful variable
@@ -21,6 +22,15 @@ const Body = () => {
     setNewResList(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
     setFilterResList(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
   }
+
+  const onlineStatus = useOnlineStaus();
+
+  if(onlineStatus === false)
+    return (
+      <h1>
+        Looks like you are offline!! Please check your internet connection
+      </h1>
+  )
 
   // Conditional Rendering
   return newResList?.length === 0 ? ( <Shimmer /> ) : (
