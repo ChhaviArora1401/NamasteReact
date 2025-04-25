@@ -35,30 +35,32 @@ const Body = () => {
   // Conditional Rendering
   return newResList?.length === 0 ? ( <Shimmer /> ) : (
     <div className="body">
-        <div className="filter">
-          <div className="search"> 
-            <input type="text" className="searchbox" value={searchText} 
-            onChange={(e) => {
-              setSearchText(e.target.value);
-            }} />
-            <button onClick={() => {
-              // FIlter the res cards and update Ui
-              //search text
-              console.log(searchText);
-              const filteredRes = newResList.filter((res) => 
-                {return res.info.name.toLowerCase().includes(searchText)}
-              );
-              setFilterResList(filteredRes);
-            }}>Search</button>
-          </div>
-            <button className="filter-btn" onClick={() => {
-              const filtered = newResList.filter((res) => res.info.avgRating > 4.5);
-              setFilterResList(filtered);
-            }}>Top Rated Restaurants</button>
+      <div className="filter flex">
+        <div className="search m-4 p-4 flex items-center"> 
+          <input type="text" className="border border-solid border-black" value={searchText} 
+          onChange={(e) => {
+            setSearchText(e.target.value);
+          }} />
+          <button className="px-4 py-2 m-4 bg-green-100 rounded-lg" onClick={() => {
+            // FIlter the res cards and update Ui
+            //search text
+            console.log(searchText);
+            const filteredRes = newResList.filter((res) => 
+              {return res.info.name.toLowerCase().includes(searchText)}
+            );
+            setFilterResList(filteredRes);
+          }}>Search</button>
         </div>
-      <div className="res-container">
+        <div className="search m-4 p-4">
+          <button className="px-4 py-2 m-4 bg-gray-100 rounded-lg" onClick={() => {
+            const filtered = newResList.filter((res) => res.info.avgRating > 4.5);
+            setFilterResList(filtered);
+          }}>Top Rated Restaurants</button>
+        </div>
+      </div>
+      <div className="res-container flex flex-wrap">
        {filterResList?.map((r) => {
-          return  <Link to={"/restaurants/" + r.info.id} key={r.info.id}><ResCard resData={r} /></Link>
+          return <Link to={"/restaurants/" + r.info.id} key={r.info.id}><ResCard resData={r} /></Link>
         })}
       </div>
     </div>
